@@ -1,0 +1,35 @@
+#include <iostream>
+#include<set>
+#include<fstream>
+using namespace std;
+
+int main() 
+{
+    
+  ifstream in("input.txt");
+  
+  if (!in.is_open()) 
+  {
+    cout << "not opened";
+  }
+  
+   set<long long> cases;
+  
+  while (!in.eof()) 
+  {
+    long long num;
+    in >> num;
+    cases.insert(num);
+  }
+  
+  long long sum = 0;
+  
+  for (auto& item : cases) 
+  {
+    sum = sum + item;
+  }
+  
+  ofstream out("output.txt");
+  out << sum;
+  
+}
