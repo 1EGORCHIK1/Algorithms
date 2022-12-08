@@ -1,0 +1,103 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+
+
+struct Branch
+{
+  int Data;			
+  Branch *LeftBranch;		
+  Branch *RightBranch;
+};
+
+
+void
+Add (int Data, Branch * &Tree)
+{
+  if (Tree == NULL)
+    {
+      Tree = new Branch;	
+      Tree->Data = Data;
+      Tree->LeftBranch = NULL;	
+      Tree->RightBranch = NULL;
+    }
+
+  if (Data < Tree->Data)
+    {
+      if (Tree->LeftBranch != NULL)
+	Add (Data, Tree->LeftBranch);
+
+      else
+	{
+	  Tree->LeftBranch = new Branch;
+	  Tree->LeftBranch->Data = Data;
+	  Tree->LeftBranch->LeftBranch = NULL;
+	  Tree->LeftBranch->RightBranch = NULL;
+	}
+    }
+
+  if (Data > Tree->Data)
+    {
+      if (Tree->RightBranch != NULL)
+	Add (Data, Tree->RightBranch);
+        
+    
+      else
+	{
+	  Tree->RightBranch = new Branch;
+	  Tree->RightBranch->Data = Data;
+	  Tree->RightBranch->LeftBranch = NULL;
+	  Tree->RightBranch->RightBranch = NULL;
+	}
+    
+}
+}
+
+ofstream out("output.txt");
+void
+pr_obh (Branch * &Tree)
+{
+  if (Tree != NULL)
+    {	
+        out << Tree->Data << endl;
+      pr_obh (Tree->LeftBranch);
+      
+      pr_obh (Tree->RightBranch);
+    }
+
+
+}
+
+void
+del (Branch * &Tree)
+{
+  if (Tree != NULL)
+    {
+      del (Tree->LeftBranch);
+      del (Tree->RightBranch);
+      delete Tree;
+      Tree = NULL;
+    }
+}
+
+
+
+int main ()
+{
+    Branch *Tre = NULL;
+  ifstream in("input.txt");
+    int key;
+    
+    
+   while (!in.eof())
+   {
+       in >> key;
+       Add (key, Tre);
+       
+   }
+    
+     
+  //out << key;
+      pr_obh (Tre);
+  del (Tre);
+  }
